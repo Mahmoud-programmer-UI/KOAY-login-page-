@@ -14,7 +14,7 @@
     padding: 0;
 }
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
 }
 .featured{
     position: var(--main-position);
@@ -112,8 +112,10 @@ header .container .icons i{
 
 #Cart{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
+
 .reference-cart{
     top: -5px;
     left: 13px;
@@ -166,7 +168,7 @@ header .container .icons i{
 }
 .background{
     margin-left: 5%;
-    background-image: url("../Images/6135ebf6-4ee5-4edd-bd3c-3d34420cd76b.png");
+    background-image: url("../6135ebf6-4ee5-4edd-bd3c-3d34420cd76b.png");
     background-repeat: no-repeat;
     background-size: cover;
     width: 90%;
@@ -179,7 +181,7 @@ header .container .icons i{
 .background p,
 .background h1{
     padding-left: 80px;
-    color: white;
+    color: rgb(91, 227, 23);
 }
 .background p{
     margin-bottom: 6px;
@@ -342,7 +344,8 @@ header{
     padding: var(--btn-padding);
     word-spacing: 2px;
 }
-header input{
+.shadow input{
+        font-family: 'Times New Roman', Times, serif;
     width:  50%;
     height: 50%;
     position:absolute;
@@ -352,8 +355,8 @@ header input{
     border:none;
     outline:none;
     border-radius: var(--main-radius);
-    font-size: 40px;
-    padding-left: 2.5%;
+    font-size: 20px;
+    padding: 2%;
 }
 .close-search{
     display: flex;
@@ -370,29 +373,13 @@ header input{
     background-color: #b05d5d;
     border-radius: 100%;
 }
-.shadow button{
-    background-color: #b05d5d;
-    width:  50px;
-    height: 50px;
-    display: flex;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position:absolute;
-    left:73%;
-    top:50%;
-    transform:translate(-50%,-50%);
-    border:none;
-    outline:none;
-    border-radius: 100%;
-}
 .shadow2{
     display: none;
     width: 100%;
-    height: 1190vh;
+    height: 100%;
+    z-index: 9;
+    position: fixed;
     top: 0px;
-    position: absolute;
     background-color: rgba(255, 255, 255, 0.6);
 }
 .shadow{

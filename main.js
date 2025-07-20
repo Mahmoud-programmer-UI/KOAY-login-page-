@@ -1,6 +1,3 @@
-
-        let html = document.getElementsByTagName("html")[0];
-        console.log(html)
         const cart = document.getElementById("Cart");
         // Create an initial message for an empty cart
         let emptyCartMessage = document.createElement("p");
@@ -13,24 +10,11 @@
         emptyCartMessage2.style.cssText="text-decoration: underline;color: black; display block;cursor:pointer"
         cart.appendChild(emptyCartMessage)
         cart.appendChild(emptyCartMessage2)
-                let input=document.createElement("input")
-        input.type="text"
-        input.id="test"
-        document.body.appendChild(input)
         // Get all product containers
         const productContainers = document.querySelectorAll(".product");
         // Get all product containers
         const features=document.querySelectorAll(".featured");
-        features.forEach((feature) => {
-        const searchMessage = feature.querySelector("p");
-            input.onclick=function(){
-                for(let i=0;i<55;i++){
-                    if(input.value[i]===searchMessage.textContent[i]){
-                        console.log("me")
-                    }
-                }
-            }
-    })
+
         // main functions is the parent of display all works of other functions.
         // so well help to get the error if happened 
         function main(){
@@ -64,12 +48,11 @@
         function userSign(){
             const icon=document.getElementsByTagName("i")[3];
             const form=document.getElementsByClassName("container-form")[0]
-            const content1=document.getElementById("content-dimension1");
             const content2=document.getElementById("content-dimension2");
             icon.onclick=()=>{
                 content2.style.display="none"
                 form.style.display='block'
-                document.body.style.cssText="display:flex;justify-content: center;    background-color: rgb(115, 46, 199);"
+                document.body.style.cssText="display:flex;justify-content: center;background-color: rgb(115, 46, 199);"
             }
         }
         // create inputt to search for any product inside application
@@ -313,69 +296,3 @@ function searchInput() {
         }
         }
 main()
-
-                            //requirments
-/*
-        we will add container and inside it will put lis
-        every li will contain the value of li will == the target p
-        then will be added in container with specific style
-*/
-                           //problems 
-/*
-        the li will be created every time u add it 
-*/
-                          //discuttion for the problem
-/*
-        the solve is to create lis with the values of all target value and be added in your container and be appeared.
-        then u match the same as input and if founded the li appeared in container
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class node{
-    constructor(data, left=null,right=null){
-        this.data=data;
-        this.left=left;
-        this.right=right;        
-    }
-}
-class BST{
-    constructor(){
-        this.root=null;
-    }
-    add(data){
-        if(this.root===null){
-            //why we do this for distract data from node 
-            this.root=new Node(data)
-        }else{
-
-        }
-    }
-
-}

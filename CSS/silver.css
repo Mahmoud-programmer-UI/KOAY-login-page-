@@ -398,8 +398,9 @@ header{
 
 
 .container-form{
+    margin-top: 25%;
     padding: 7px;
-    border:1px solid black;
+    border:1px solid white;
     color: white;
     border-radius: var(--main-radius);
     width: fit-content;

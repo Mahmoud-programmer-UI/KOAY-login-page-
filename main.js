@@ -1,18 +1,45 @@
+
+        let html = document.getElementsByTagName("html")[0];
+        console.log(html)
         const cart = document.getElementById("Cart");
         // Create an initial message for an empty cart
         let emptyCartMessage = document.createElement("p");
+        let emptyCartMessage2 = document.createElement("a");
         emptyCartMessage.classList.add("empty-cart-message");
+        emptyCartMessage2.classList.add("empty-cart-message2");
         emptyCartMessage.innerText = "Your cart is empty.";
+        emptyCartMessage2.innerText = "continue shopping";
+        emptyCartMessage.style.padding="10px 0"
+        emptyCartMessage2.style.cssText="text-decoration: underline;color: black; display block;cursor:pointer"
         cart.appendChild(emptyCartMessage)
+        cart.appendChild(emptyCartMessage2)
+                let input=document.createElement("input")
+        input.type="text"
+        input.id="test"
+        document.body.appendChild(input)
         // Get all product containers
         const productContainers = document.querySelectorAll(".product");
+        // Get all product containers
+        const features=document.querySelectorAll(".featured");
+        features.forEach((feature) => {
+        const searchMessage = feature.querySelector("p");
+            input.onclick=function(){
+                for(let i=0;i<55;i++){
+                    if(input.value[i]===searchMessage.textContent[i]){
+                        console.log("me")
+                    }
+                }
+            }
+    })
         // main functions is the parent of display all works of other functions.
         // so well help to get the error if happened 
         function main(){
             cartControll()
             visibilityOfNav()
             userSign()
+            referenceCart()
             searchInput()
+            createMoreToSee()
             // Iterate over each product container and set up its behavior
             productContainers.forEach(setupProduct);
         }
@@ -46,70 +73,130 @@
             }
         }
         // create inputt to search for any product inside application
+// ... (الكود الخاص بك قبل دالة searchInput)
+
 function searchInput() {
     const icon = document.getElementsByTagName("i")[4];
-    const shadow = document.getElementById("shadow");
-    const shadow2 = document.getElementById("shadow2");
+    const shadow = document.getElementById("shadow"); // هذا هو العنصر الذي يحتوي على حقل البحث والـ li's
+    const shadow2 = document.getElementById("shadow2"); // هذا هو عنصر الظل الذي يملأ الشاشة
 
-    // Create input, button, and close once
+    // إنشاء input, button, و close مرة واحدة
     let input = document.createElement("input");
     input.type = "text";
     input.placeholder = "Search here...";
     input.id = "page-searching";
     input.classList.add("page-searching");
 
-    let button = document.createElement("button");
-    button.innerText = "Search";
-    button.classList.add("btn-search");
-
     let close = document.createElement("p");
     close.innerText = "X";
     close.classList.add("close-search");
 
+    let containerValues = document.createElement("div"); // هذا سيحتوي على الـ li's الناتجة عن البحث
+    containerValues.classList.add("search-results-container"); // أضف كلاس لتنسيقه
+    
     shadow.appendChild(input);
-    shadow.appendChild(button);
     shadow.appendChild(close);
+    shadow.appendChild(containerValues); // أضف الحاوية للنتائج
 
-    // Show modal
-    icon.onclick = () => {
-        shadow.style.display = "block";
-        shadow2.style.display = "block";
-    };
+    // تخزين مراجع لجميع عناصر الـ featured والـ li's التي سننشئها
+    const allFeatures = document.querySelectorAll(".featured");
+    const searchItemsData = []; // لتخزين البيانات الأساسية للبحث (p.textContent من كل feature)
 
-    // Hide modal
-    close.onclick = () => {
-        shadow.style.display = "none";
-        shadow2.style.display = "none";
-    };
-
-    // Search logic
-button.onclick = () => {
-    const inputValue = input.value.trim().toLowerCase();
-    let found = false;
-    const features=document.querySelectorAll(".featured");
-    features.forEach((feature) => {
-        const searchMessage = feature.querySelector(".search-message");
+    // إنشاء الـ li's مرة واحدة عند تهيئة دالة searchInput
+    allFeatures.forEach((feature) => {
+        const searchMessage = feature.querySelector("p"); // النص الذي نبحث عنه داخل الـ feature
         if (searchMessage) {
-            const messageText = searchMessage.textContent.trim().toLowerCase();
-            
-            if (messageText === inputValue) {
-                console.log("Match found:", messageText);
-                found = true;
-                // Optional: show only matching feature
-                feature.style.display = "block";
-            } else {
-                // Optional: hide non-matching
-                feature.style.display = "none";
-            }
+            let p = document.createElement("p");
+            p.innerHTML = searchMessage.textContent;
+            p.classList.add("search-result-item"); // أضف كلاس لتنسيق عناصر النتائج
+            p.style.display = 'none'; // أخفِها مبدئيًا
+            containerValues.appendChild(p);
+
+            // تخزين مرجع الـ li والـ feature والنص المرتبط بهما
+            searchItemsData.push({
+                text: searchMessage.textContent.trim().toLowerCase(),
+                liElement: p,
+                featureElement: feature
+            });
         }
     });
 
-    if (!found) {
-        alert("No match found");
-    }
-};
+    // إظهار المودال (نافذة البحث)
+    icon.onclick = () => {
+        shadow.style.display = "block";
+        shadow2.style.display = "block";
+        input.value = ''; // مسح حقل البحث عند الفتح
+        // إخفاء جميع عناصر النتائج عند فتح مربع البحث فارغًا
+        searchItemsData.forEach(item => {
+            item.liElement.style.display = 'none';
+            // لا تخفي الـ feature هنا، لأنها قد تكون مرئية في الصفحة الأصلية
+        });
+        // تأكد من أن جميع الـ features مرئية في الصفحة الأصلية عند فتح البحث
+        allFeatures.forEach(feature => {
+            feature.style.display = 'block';
+        });
+    };
 
+    // إخفاء المودال (نافذة البحث)
+    close.onclick = () => {
+        shadow.style.display = "none";
+        shadow2.style.display = "none";
+        input.value = ''; // مسح حقل البحث عند الإغلاق
+        // عند الإغلاق، يجب التأكد من أن جميع الـ features مرئية في الصفحة الرئيسية مرة أخرى
+        allFeatures.forEach(feature => {
+            feature.style.display = 'block';
+        });
+        // إخفاء الـ li's الموجودة في نافذة البحث
+        searchItemsData.forEach(item => {
+            item.liElement.style.display = 'none';
+        });
+    };
+
+    // منطق البحث
+    input.oninput = () => {
+        const inputValue = input.value.trim().toLowerCase();
+        let anyMatchFound = false; // لتتبع ما إذا تم العثور على أي تطابقات
+
+        // إذا كان حقل البحث فارغًا، أخفِ كل الـ li's في نافذة البحث وأظهِر كل الـ features في الصفحة الأصلية
+        if (inputValue === '') {
+            searchItemsData.forEach(item => {
+                item.liElement.style.display = 'none';
+            });
+            allFeatures.forEach(feature => {
+                feature.style.display = 'block'; // أظهِر كل الـ features في الصفحة الأصلية
+            });
+            // إذا كنت تريد إظهار رسالة "لا يوجد بحث" بدلاً من إخفاء كل شيء، يمكنك تعديل هذا.
+            // حاليًا، هذا يختفي كل النتائج عندما يكون البحث فارغًا.
+            return; // توقف عن تنفيذ بقية الدالة
+        }
+
+        // تكرار على البيانات المخزنة (التي تم إنشاؤها مرة واحدة)
+        searchItemsData.forEach(item => {
+            const messageText = item.text; // النص المحفوظ من الـ p
+            const p = item.liElement;     // عنصر الـ li المرتبط
+            const feature = item.featureElement; // عنصر الـ feature المرتبط
+
+            if (messageText.includes(inputValue)) {
+                p.style.display = 'block'; // أظهر عنصر الـ li داخل نافذة البحث
+                feature.style.display = 'block'; // أظهر عنصر الـ feature في الصفحة الأصلية
+                anyMatchFound = true;
+            } else {
+                p.style.display = 'none'; // أخفِ عنصر الـ li داخل نافذة البحث
+                feature.style.display = 'none'; // أخفِ عنصر الـ feature في الصفحة الأصلية
+            }
+        });
+
+        // رسالة "لا يوجد تطابق"
+        // يمكنك إظهار رسالة داخل containerValues بدلاً من alert
+        if (!anyMatchFound) {
+            alert("no match founded")
+        }
+    };
 }
+
+
+
+
             //to make users sure that their Items in the cart
             // so it`s an alert for users
             function referenceCart(){
@@ -121,7 +208,7 @@ button.onclick = () => {
                 iconLogo.appendChild(referenceCartParagraph) 
                 return referenceCartParagraph;
             }
-            referenceCart()
+
         // This array will hold references to the cloned images in the cart
         let savedImagesInCart = [];
 
@@ -149,6 +236,7 @@ button.onclick = () => {
                 // If the empty cart message exists, remove it
                 if (emptyCartMessage && emptyCartMessage.parentNode === cart) {
                     cart.removeChild(emptyCartMessage);
+                    cart.removeChild(emptyCartMessage2);
                     emptyCartMessage = null; // Clear the reference
                     // display the alert cart
                     const referenceCartParagraph=document.getElementById("reference-cart");
@@ -224,5 +312,70 @@ button.onclick = () => {
         
         }
         }
-        createMoreToSee()
 main()
+
+                            //requirments
+/*
+        we will add container and inside it will put lis
+        every li will contain the value of li will == the target p
+        then will be added in container with specific style
+*/
+                           //problems 
+/*
+        the li will be created every time u add it 
+*/
+                          //discuttion for the problem
+/*
+        the solve is to create lis with the values of all target value and be added in your container and be appeared.
+        then u match the same as input and if founded the li appeared in container
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class node{
+    constructor(data, left=null,right=null){
+        this.data=data;
+        this.left=left;
+        this.right=right;        
+    }
+}
+class BST{
+    constructor(){
+        this.root=null;
+    }
+    add(data){
+        if(this.root===null){
+            //why we do this for distract data from node 
+            this.root=new Node(data)
+        }else{
+
+        }
+    }
+
+}

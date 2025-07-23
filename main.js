@@ -1,15 +1,10 @@
         const cart = document.getElementById("Cart");
         // Create an initial message for an empty cart
         let emptyCartMessage = document.createElement("p");
-        let emptyCartMessage2 = document.createElement("a");
         emptyCartMessage.classList.add("empty-cart-message");
-        emptyCartMessage2.classList.add("empty-cart-message2");
         emptyCartMessage.innerText = "Your cart is empty.";
-        emptyCartMessage2.innerText = "continue shopping";
         emptyCartMessage.style.padding="10px 0"
-        emptyCartMessage2.style.cssText="text-decoration: underline;color: black; display block;cursor:pointer"
         cart.appendChild(emptyCartMessage)
-        cart.appendChild(emptyCartMessage2)
         // Get all product containers
         const productContainers = document.querySelectorAll(".product");
 

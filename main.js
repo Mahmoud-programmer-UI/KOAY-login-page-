@@ -31,7 +31,7 @@
         }
         function visibilityOfNav(){
             let spans=document.getElementsByTagName("span")[2]
-            let list=document.getElementsByTagName("div")[15];
+            let list=document.getElementsByTagName("div")[16];
             spans.onclick=()=>{
                 list.classList.toggle("is-visible");
             }
